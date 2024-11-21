@@ -1,0 +1,38 @@
+.container {
+  padding: 20px;
+}
+
+.goBack {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.details {
+  display: flex;
+  gap: 20px;
+}
+
+.poster {
+  width: 200px;
+}
+
+.info {
+  flex: 1;
+}
+
+.nav {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  gap: 10px;
+  font-size: 1.5rem;
+  a {
+    color: rgb(201, 20, 20);
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .active {
+    text-decoration: underline;
+    color: rgb(78, 39, 39);
+  }
+}

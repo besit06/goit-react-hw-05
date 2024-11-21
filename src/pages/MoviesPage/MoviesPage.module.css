@@ -1,0 +1,14 @@
+.formSearch {
+  display: flex;
+  gap: 10px;
+}
+
+.inputSearch {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btnSearch {
+  border-radius: 5px;
+  cursor: pointer;
+}
