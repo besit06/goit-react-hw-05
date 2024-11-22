@@ -19,7 +19,7 @@ const MoviesPage = () => {
               <input className={s.inputSearch} value={query} onChange={(e) => setQuery(e.target.value)} />
         <button className={s.btnSearch} type="submit">Search</button>
       </form>
-      <MovieList movies={movies} />
+          <MovieList movies={movies}  />
     </>
   );
 };

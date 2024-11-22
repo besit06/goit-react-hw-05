@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import { fetchMovieDetails } from "../../api/tmdb";
 import s from "./MovieDetailsPage.module.css";
@@ -6,10 +6,10 @@ import s from "./MovieDetailsPage.module.css";
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  const location = useLocation();
+ const location = useLocation();
+  const goBackLink = location.state?.from || "/movies";
     
-    const goBackLink = useRef(location.state ?? '/movies');
-
+  
   useEffect(() => {
     fetchMovieDetails(movieId)
       .then(setMovie)
@@ -22,7 +22,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.container}>
-      <Link to={goBackLink.current} className={s.goBack}>
+      <Link to={goBackLink} className={s.goBack}>
         Go back
       </Link>
       <div className={s.details}>
@@ -39,10 +39,10 @@ const MovieDetailsPage = () => {
       </div>
 
       <nav className={s.nav}>
-        <Link to="cast" state={{ from: goBackLink }} className={s.link}>
+        <Link to="cast" state={ goBackLink } className={s.link}>
           Cast
         </Link>
-        <Link to="reviews" state={{ from: goBackLink }} className={s.link}>
+        <Link to="reviews" state={ goBackLink } className={s.link}>
           Reviews
         </Link>
       </nav>

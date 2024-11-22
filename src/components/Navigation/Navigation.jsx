@@ -11,14 +11,12 @@ const Navigation = () => {
     <nav className={s.nav}>
       <NavLink 
         to="/" 
-        className={buildLinkClass}
-      >
+        className={buildLinkClass}>
         Home
       </NavLink>
       <NavLink 
         to="/movies" 
-        className={buildLinkClass}
-      >
+        className={buildLinkClass}>
         Movies
       </NavLink>
     </nav>
