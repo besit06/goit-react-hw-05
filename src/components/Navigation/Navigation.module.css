@@ -1,14 +1,17 @@
 .nav {
   display: flex;
-  gap: 10px;
-  font-size: 1.5rem;
-  a {
-    color: rgb(201, 20, 20);
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .active {
-    text-decoration: underline;
-    color: rgb(78, 39, 39);
-  }
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.link.active {
+  color: #ff5722;
 }

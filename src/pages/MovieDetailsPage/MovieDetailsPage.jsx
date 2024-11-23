@@ -1,51 +1,79 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, Outlet, useLocation } from "react-router-dom";
-import { fetchMovieDetails } from "../../api/tmdb";
-import s from "./MovieDetailsPage.module.css";
+import  { useState, useEffect, useRef } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { fetchMovieDetails } from '../../api/tmdb';
+import s from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
+  const location = useLocation();
+  const goBackLink = useRef(location.state?.from || '/movies'); 
   const [movie, setMovie] = useState(null);
- const location = useLocation();
-  const goBackLink = location.state?.from || "/movies";
-    
-  
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    fetchMovieDetails(movieId)
-      .then(setMovie)
-      .catch(console.error);
+    const fetchDetails = async () => {
+      try {
+        const movieDetails = await fetchMovieDetails(movieId);
+        setMovie(movieDetails);
+      } catch (error) {
+        setError('Failed to fetch movie details.');
+         console.log(error);
+      }
+    };
+
+    fetchDetails();
   }, [movieId]);
 
-  if (!movie) return <p>Loading...</p>;
+  if (error) {
+    return <p className={s.error}>{error}</p>;
+  }
 
-  const { title, overview, genres, poster_path } = movie;
+  if (!movie) {
+    return <p>Loading...</p>;
+  }
+
+  const { title, overview, genres, poster_path, vote_average } = movie;
+  const posterUrl = poster_path
+    ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+    : 'https://via.placeholder.com/300x450?text=No+Image';
 
   return (
     <div className={s.container}>
-      <Link to={goBackLink} className={s.goBack}>
-        Go back
+      <Link to={goBackLink.current} className={s.goBack}>
+        &#8592; Go back
       </Link>
+
       <div className={s.details}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-          alt={title}
-          className={s.poster}
-        />
+        <img src={posterUrl} alt={title} className={s.poster} />
         <div className={s.info}>
-          <h1>{title}</h1>
-          <p><strong>Overview:</strong> {overview}</p>
-          <p><strong>Genres:</strong> {genres.map(genre => genre.name).join(", ")}</p>
+          <h2>{title}</h2>
+          <p>
+            <b>Rating:</b> {vote_average}
+          </p>
+          <p>
+            <b>Overview:</b> {overview}
+          </p>
+          <p>
+            <b>Genres:</b> {genres.map((genre) => genre.name).join(', ')}
+          </p>
         </div>
       </div>
 
-      <nav className={s.nav}>
-        <Link to="cast" state={ goBackLink } className={s.link}>
-          Cast
-        </Link>
-        <Link to="reviews" state={ goBackLink } className={s.link}>
-          Reviews
-        </Link>
-      </nav>
+      <div className={s.additional}>
+        <h3>Additional Information</h3>
+        <ul>
+          <li>
+            <Link to="cast" state={{ from: goBackLink.current }}>
+              Cast
+            </Link>
+          </li>
+          <li>
+            <Link to="reviews" state={{ from: goBackLink.current }}>
+              Reviews
+            </Link>
+          </li>
+        </ul>
+      </div>
 
       <Outlet />
     </div>
